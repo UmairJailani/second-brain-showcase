@@ -19,7 +19,15 @@ function Log($msg) {
     Add-Content -Path $log -Value $line -Encoding utf8
     Write-Output $line
 }
-function Git-Run { $ErrorActionPreference = 'Continue'; & git.exe @args; if ($LASTEXITCODE -ne 0) { throw "git $($args -join ' ') failed (exit $LASTEXITCODE)" } }
+function Git-Run {
+    $ErrorActionPreference = 'Continue'
+    $out = & git.exe @args 2>&1 | ForEach-Object { "$_" }
+    if ($LASTEXITCODE -ne 0) {
+        $detail = ($out | Where-Object { $_ -match '\S' } | Select-Object -Last 2) -join ' / '
+        throw "git $($args -join ' ') failed (exit $LASTEXITCODE): $detail"
+    }
+    $out
+}
 
 try {
     # 1. Snapshot of committed vault content only
