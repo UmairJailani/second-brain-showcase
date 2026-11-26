@@ -7,7 +7,7 @@
 This repo is the public window into it. The real vault stays private. This page and the [notes](notes/) folder update automatically every hour from it, through a [privacy filter](docs/privacy-filter.md).
 
 - **244 notes** in the private vault, **4 published** here
-- **510 commits** since 2026-04-07
+- **512 commits** since 2026-04-07
 - Notes per area: resources 101, projects 80, meta 30, areas 12, goals 9, (root) 4, learning 4, folds 3, people 1
 
 ---
@@ -94,7 +94,7 @@ Commits to the private vault per month:
 | 2026-08 | ▇▇▇▇ 42 |
 | 2026-09 | ▇ 12 |
 | 2026-10 | ▇ 6 |
-| 2026-11 | ▇▇▇▇ 41 |
+| 2026-11 | ▇▇▇▇ 43 |
 
 ## Use the idea yourself
 
@@ -107,4 +107,4 @@ Commits to the private vault per month:
 - [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), the underlying idea
 - Built and maintained by [Umair Jailani](https://github.com/UmairJailani) with Claude Code and Codex
 
-<sub>Last synced from the private vault: 2026-11-26 09:57 UTC</sub>
+<sub>Last synced from the private vault: 2026-11-26 10:28 UTC</sub>
