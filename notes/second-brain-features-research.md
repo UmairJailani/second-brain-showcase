@@ -18,14 +18,14 @@ Compared my vault with well-known public setups in November 2026: Daniel Miessle
 | "Current state" page + decision diary | Most LLM-wiki setups | ✅ `hot.md` + monthly diary | ✅ |
 | Verified backups | Rare | ✅ checks GitHub, not the exit code | ✅ |
 | Public view with a privacy filter | Quartz/digital gardens (opt-in flag) | ❌ | ✅ hourly opt-in sync |
-| **Voice capture** (speak a thought, it lands in the inbox) | Telegram + Whisper pipelines, AutoADHD, voice journaling | ❌ | ✅ offline, Windows built-in |
+| **Voice capture** (speak a thought, it lands in the inbox) | Telegram + Whisper pipelines, AutoADHD, voice journaling | ❌ | ✅ Whisper, plus a drop folder for WhatsApp/phone audio |
 | **Spoken brief** (the assistant talks back) | PAI's digital assistant has a voice | ❌ | ✅ reads hot.md aloud |
 | **Inbox for raw captures** | Karpathy `raw/`, Forte's "Capture" step | ⚠️ `.raw/` existed, unused | ✅ `.raw/inbox/` + processing rule |
 | **Weekly review** | Forte, Nate B. Jones "daily nudges", evening reviews | ❌ | ✅ auto-written every Sunday |
 | **Purpose page (TELOS)** | PAI: mission, goals, challenges, strategies | ⚠️ spread across profile/goals | ✅ one draft page, my words marked ✍️ |
 | Search over the whole vault | qmd, Smart Connections, MCP servers | ✅ `retrieve.py` (BM25 + rerank) | ✅ |
 | Capture from the phone | Telegram bots, Slack, voice-memo apps | ❌ | ❌ needs an account and token, see below |
-| Better transcription (Urdu, noisy audio) | whisper.cpp, SuperWhisper, Deepgram | ❌ | ❌ needs an install, see below |
+| Better transcription (Urdu, noisy audio) | whisper.cpp, SuperWhisper, Deepgram | ❌ | ✅ Whisper large-v3-turbo on the GPU, local |
 | Spaced repetition for learning | Obsidian SR plugins, Anki | ⚠️ Anki used separately | ❌ |
 | Passive capture (screen/meeting memory) | Screenpipe + MCP | ❌ | ❌ deliberately not: privacy cost too high |
 
@@ -36,11 +36,15 @@ Compared my vault with well-known public setups in November 2026: Daniel Miessle
 - **Weekly review:** `scripts/review/weekly_review.py` writes `wiki/reviews/weekly-YYYY-Www.md` every Sunday at 21:00: commits, new notes, diary decisions, inbox count, what's waiting on me, plus reflection prompts. It never overwrites a review I've written in.
 - **TELOS page:** telos collects mission, goals, challenges, strategies and principles in one place. Lines from confirmed facts are marked ✅; lines only I can write are ✍️ and agents may not invent them.
 
+## Whisper upgrade (26 November)
+- Voice notes now use **faster-whisper `large-v3-turbo`** running on the GTX 1060: accurate, auto-detects Urdu or English, and adds an English translation for non-English notes. About 3 seconds per short note on the GPU.
+- **Drop folder:** WhatsApp voice notes or phone memos placed in `.raw/inbox/audio/` are transcribed in one click; audio stays local and out of Git.
+- Lesson: on a busy CPU the same model took over a minute. The GPU and the right number format (int8) made it about 20x faster. Also, the newest PyAV broke faster-whisper's audio loading; pinned `av<19`.
+
 ## Worth adding later (needs a decision or an install)
 1. **Phone capture via a Telegram bot.** Voice or text message → transcribed → inbox. Needs a bot token and something always running (PC on, or a small cloud function).
-2. **Whisper transcription.** Much better accuracy, handles Urdu. Needs `whisper.cpp` or `faster-whisper` plus a model download (about 150 MB–1.5 GB).
-3. **Spaced repetition** for Python and Japanese inside the vault, so learning notes turn into review cards.
-4. **MCP access from the Claude desktop and phone apps**, so the vault can be queried outside Claude Code.
+2. **Spaced repetition** for Python and Japanese inside the vault, so learning notes turn into review cards.
+3. **MCP access from the Claude desktop and phone apps**, so the vault can be queried outside Claude Code.
 
 ## Sources
 - [Daniel Miessler: Building a Personal AI Infrastructure](https://danielmiessler.com/blog/personal-ai-infrastructure) and [PAI 5.0](https://danielmiessler.com/blog/announcing-pai-5-life-operating-system)
